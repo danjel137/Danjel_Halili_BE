@@ -1,3 +1,5 @@
+package random_from_file;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;

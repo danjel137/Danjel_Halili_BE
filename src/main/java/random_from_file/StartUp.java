@@ -1,3 +1,4 @@
+package random_from_file;
 
 import java.io.IOException;
 
