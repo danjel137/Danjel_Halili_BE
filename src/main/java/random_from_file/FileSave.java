@@ -1,9 +1,10 @@
 package random_from_file;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import person_from_db.Person;
+
+import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -11,7 +12,42 @@ import java.util.stream.Collectors;
 
 public class FileSave {
 
+    public static void ListAllPersonSaveInJsonFile(List<Person> list) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(new File("src/main/resources/JsonfileFromDb.json"), list);
+    }
+    public static Person[] ListAllPersonWriteFromJsonFileArray(){
+        ObjectMapper mapper = new ObjectMapper();
+        try{
+           Person[] persons =mapper.readValue(new FileReader("src/main/resources/JsonfileFromDb.json"),Person[].class);
 
+
+            for (int i=0;i<persons.length;i++) {
+               // System.out.println(persons[i].getId()+persons[i].getEmail()+persons[i].getName()+persons[i].getSurname());
+            }return persons;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void FileSaveAllNamePersonPersonFromDb(List <String>list) throws IOException {
+        FileWriter fileWriter2 = new FileWriter("src/main/resources/FileAllPersons");
+        for (String st : list) {
+            fileWriter2.write(st + "\n");
+        }
+        fileWriter2.close();
+
+    }
+
+    public static void FileAllPersonFromDb(List<Person> list) throws IOException {
+        FileWriter fileWriter2 = new FileWriter("src/main/resources/FileAllPersonFromDb");
+        for (Person person : list) {
+            fileWriter2.write(person + "\n");
+        }
+        fileWriter2.close();
+
+    }
     public static void FileSaveAllPersons(Main o) throws IOException {
 
         FileWriter fileWriter = new FileWriter("src\\main\\resources\\FileAllPersons");

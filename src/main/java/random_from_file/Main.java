@@ -1,32 +1,22 @@
 package random_from_file;
 
+import person_from_db.Person;
+import person_from_db.PrepareInsertStatement;
+
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.sql.SQLException;
+import java.util.*;
 
 
 public class Main {
     Scanner input = new Scanner(System.in);
     List<String> allPersons = new ArrayList<>();
-//            List.of(
-//            "isuf.muca@crystal-system.eu",
-//            "danjel.halili@crystal-system.eu",
-//            "flavio.lorenci@crystal-system.eu",
-//            "elia.omeri@crystal-system.eu",
-//            "ardit.elezi@crystal-system.eu",
-//            "luka.buziu@crystal-system.eu",
-//            "megi.lala@crystal-system.eu",
-//            "irena.shahini@crystal-system.eu",
-//            "indrit.vaka@crystal-system.eu"
-//
-//    ));
-
     List<String> chosenPersons = new ArrayList<>();
 
-    public void fetchFromFile() throws FileNotFoundException {
+    public void fetchFromFile()  {
         try {
             FileSave.FileWriteAllPersons(this);
         } catch (Exception e) {
@@ -96,7 +86,7 @@ public class Main {
 
     }
 
-    public void showWhatYouWantToDo(int n) throws IOException {
+    public void showWhatYouWantToDo(int n) throws  SQLException {
 
 
         if (n == 1) {
@@ -108,56 +98,71 @@ public class Main {
         } else if (n == 4) {
             numAllPerson();
         } else if (n == 5) {
-            listModify();
-        } else {
+            PrepareInsertStatement.addNewPerson();
+        }
+        else if(n==6){
+            getDataFromAPerson(FileSave.ListAllPersonWriteFromJsonFileArray());
+        }
+        else {
             System.out.println("Please enter the correct number!");
         }
         text();
     }
 
-    public void listModify() {
-        System.out.println("write add if you want to add new email person" + "\n" +
-                "write delete if you want to remove any email person in list");
-        String a = input.nextLine();
-        if (a.equalsIgnoreCase("add")) {
-            System.out.println("Please add the email of the person you want to add");
-            String st = input.nextLine();
-            boolean b = allPersons.stream().anyMatch((l) -> l.equals(st));
-            boolean c = chosenPersons.stream().anyMatch((l) -> l.equals(st));
+//    public void listModify() {
+//        System.out.println("write add if you want to add new email person" + "\n" +
+//                "write delete if you want to remove any email person in list");
+//        String a = input.nextLine();
+//        if (a.equalsIgnoreCase("add")) {
+//            System.out.println("Please add the email of the person you want to add");
+//            String st = input.nextLine();
+//            boolean b = allPersons.stream().anyMatch((l) -> l.equals(st));
+//            boolean c = chosenPersons.stream().anyMatch((l) -> l.equals(st));
+//
+//            if (!b && !c) {
+//                allPersons.add(st);
+//            }
+//
+//            else {
+//                System.out.println(st + " this email already exist");
+//            }
+//
+//        }
+//        if (a.equalsIgnoreCase("delete")) {
+//            System.out.println("Please add the email of the person you want to remove");
+//            String st = input.nextLine();
+//            boolean b = allPersons.stream().allMatch((l) -> l.equals(st));
+//            boolean c = chosenPersons.stream().allMatch((l) -> l.equals(st));
+//            if (!c) {
+//                chosenPersons.remove(st);
+//            }
+//            if (!b) {
+//                allPersons.remove(st);
+//            } else {
+//                System.out.println(st + " do not exist in this list");
+//            }
+//
+//        }
+//    }
 
-            if (!b && !c) {
-                allPersons.add(st);
+    public void getDataFromAPerson(Person Arr [] ){
+        System.out.println("Enter a specific name person if you want data for that person");
+        Scanner input = new Scanner(System.in);
+        String name=input.nextLine();
+        for(int i=0;i<Arr.length;i++) {
+            if (Objects.equals(name, Arr[i].getName())) {
+                System.out.println(Arr[i]);
             }
-
-            else {
-                System.out.println(st + " this email already exist");
-            }
-
-        }
-        if (a.equalsIgnoreCase("delete")) {
-            System.out.println("Please add the email of the person you want to remove");
-            String st = input.nextLine();
-            boolean b = allPersons.stream().allMatch((l) -> l.equals(st));
-            boolean c = chosenPersons.stream().allMatch((l) -> l.equals(st));
-            if (!c) {
-                chosenPersons.remove(st);
-            }
-            if (!b) {
-                allPersons.remove(st);
-            } else {
-                System.out.println(st + " do not exist in this list");
-            }
-
         }
     }
-
 
     public void text() {
         System.out.println("Press 1 to chose a random person" + "\n" +
                 "Press 2 to show all persons when they aren't chosen yet" + "\n" +
                 "Press 3 to show person then already chose " + "\n" +
                 "Press 4 to show person number of person in lists" + "\n" +
-                "Press 5 for more" + "\n" +
-                "Press 6 to left");
+                "Press 5 to add new person in Database" + "\n" +
+                "Press 6 to get data from a specific person" + "\n" +
+                "Press 7 to exit");
     }
 }
