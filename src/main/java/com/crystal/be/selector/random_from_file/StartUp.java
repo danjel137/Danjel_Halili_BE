@@ -1,7 +1,6 @@
-package random_from_file;
+package com.crystal.be.selector.random_from_file;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
 import java.util.Scanner;
 

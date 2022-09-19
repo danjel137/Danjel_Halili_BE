@@ -1,4 +1,4 @@
-package person_from_db;
+package com.crystal.be.selector.person_from_db;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

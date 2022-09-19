@@ -1,8 +1,7 @@
-package person_from_db;
+package com.crystal.be.selector.person_from_db;
 
-import random_from_file.FileSave;
+import com.crystal.be.selector.random_from_file.FileSave;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,7 +14,7 @@ public class Db {
     public static List<Person> personListFromDb = new ArrayList<>();
     public static List<String> namePersonsFromDb = new ArrayList<>();
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
 
 
         Connection c = null;

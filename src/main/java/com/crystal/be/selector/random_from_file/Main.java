@@ -1,12 +1,8 @@
-package random_from_file;
+package com.crystal.be.selector.random_from_file;
 
-import person_from_db.Person;
-import person_from_db.PrepareInsertStatement;
+import com.crystal.be.selector.person_from_db.Person;
+import com.crystal.be.selector.person_from_db.PrepareInsertStatement;
 
-import javax.swing.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -16,7 +12,7 @@ public class Main {
     List<String> allPersons = new ArrayList<>();
     List<String> chosenPersons = new ArrayList<>();
 
-    public void fetchFromFile()  {
+    public void fetchFromFile() {
         try {
             FileSave.FileWriteAllPersons(this);
         } catch (Exception e) {
@@ -31,13 +27,14 @@ public class Main {
 
     static Random r = new Random();
 
-    public void choseOnlyFirstPersonRandom(){
+    public void choseOnlyFirstPersonRandom() {
         int randomIndex = Main.r.nextInt(allPersons.size());
-        System.out.println("first person is " +  allPersons.get(randomIndex) + "\n");
-         chosenPersons.add( allPersons.get(randomIndex));
-         allPersons.remove( allPersons.get(randomIndex));
-         text();
+        System.out.println("first person is " + allPersons.get(randomIndex) + "\n");
+        chosenPersons.add(allPersons.get(randomIndex));
+        allPersons.remove(allPersons.get(randomIndex));
+        text();
     }
+
     public void probabilityChosen() {
 
         {
@@ -86,7 +83,7 @@ public class Main {
 
     }
 
-    public void showWhatYouWantToDo(int n) throws  SQLException {
+    public void showWhatYouWantToDo(int n) throws SQLException {
 
 
         if (n == 1) {
@@ -99,11 +96,9 @@ public class Main {
             numAllPerson();
         } else if (n == 5) {
             PrepareInsertStatement.addNewPerson();
-        }
-        else if(n==6){
+        } else if (n == 6) {
             getDataFromAPerson(FileSave.ListAllPersonWriteFromJsonFileArray());
-        }
-        else {
+        } else {
             System.out.println("Please enter the correct number!");
         }
         text();
@@ -145,11 +140,11 @@ public class Main {
 //        }
 //    }
 
-    public void getDataFromAPerson(Person Arr [] ){
+    public void getDataFromAPerson(Person Arr[]) {
         System.out.println("Enter a specific name person if you want data for that person");
         Scanner input = new Scanner(System.in);
-        String name=input.nextLine();
-        for(int i=0;i<Arr.length;i++) {
+        String name = input.nextLine();
+        for (int i = 0; i < Arr.length; i++) {
             if (Objects.equals(name, Arr[i].getName())) {
                 System.out.println(Arr[i]);
             }
