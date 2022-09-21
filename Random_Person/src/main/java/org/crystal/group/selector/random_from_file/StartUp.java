@@ -1,4 +1,4 @@
-package com.crystal.be.selector.random_from_file;
+package org.crystal.group.selector.random_from_file;
 
 import java.io.IOException;
 import java.sql.SQLException;

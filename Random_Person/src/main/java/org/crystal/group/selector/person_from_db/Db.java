@@ -1,6 +1,7 @@
-package com.crystal.be.selector.person_from_db;
+package org.crystal.group.selector.person_from_db;
 
-import com.crystal.be.selector.random_from_file.FileSave;
+
+import org.crystal.group.selector.random_from_file.FileSave;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -72,5 +73,6 @@ public class Db {
 
 
     }
+
 
 }

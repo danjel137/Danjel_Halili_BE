@@ -1,4 +1,4 @@
-package com.crystal.be.selector.person_from_db;
+package org.crystal.group.selector.person_from_db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

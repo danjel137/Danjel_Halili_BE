@@ -1,7 +1,7 @@
-package com.crystal.be.selector.random_from_file;
+package org.crystal.group.selector.random_from_file;
 
 
-import com.crystal.be.selector.person_from_db.Person;
+import org.crystal.group.selector.person_from_db.Person;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
