@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Danjel",
+    "surname": "Halili",
+    "email": "danjel.halili@crystal.eu"
+  },
+  {
+    "id": 2,
+    "name": "Isuf",
+    "surname": "Muca",
+    "email": "isuf.muca@crystal-system.eu"
+  },
+  {
+    "id": 3,
+    "name": "Elia",
+    "surname": "Omeri",
+    "email": "elia.omeri@crystal-system.eu"
+  },
+  {
+    "id": 4,
+    "name": "Megi",
+    "surname": "Lala",
+    "email": "megi.lala@crystal-system.eu"
+  },
+  {
+    "id": 5,
+    "name": "Flavio",
+    "surname": "Lorenci",
+    "email": "flavio.lorenci@crystal-system.eu"
+  },
+  {
+    "id": 6,
+    "name": "Irena",
+    "surname": "Shahini",
+    "email": "irena.shahini@crystal-system.eu"
+  },
+  {
+    "id": 7,
+    "name": "Indrit",
+    "surname": "Vaka",
+    "email": "indrit.vaka@crystal-system.eu"
+  }
+]
