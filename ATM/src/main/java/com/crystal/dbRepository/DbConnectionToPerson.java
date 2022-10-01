@@ -1,21 +1,20 @@
-package com.crystal.data;
+package com.crystal.dbRepository;
 
 import com.crystal.dao.PersonService;
-import com.crystal.model.Account;
+import com.crystal.io.Menu;
+import com.crystal.io.OutputManagerToDb;
+import com.crystal.io.Scanner_input_Class;
 import com.crystal.model.Person;
 import org.joda.time.DateTime;
 
 import java.sql.*;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class DbConnectionToPerson implements PersonService {
-
     static Connection c = null;
     static Statement stmt = null;
-    static Scanner input = new Scanner(System.in);
 
     public void createPeopleTable() {
 
@@ -67,13 +66,14 @@ public class DbConnectionToPerson implements PersonService {
 
             }
 
+
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
 
-    public static String ConvertPersonObjectToString(Person person) {
+    public static String convertPersonObjectToString(Person person) {
         StringBuilder str = new StringBuilder("INSERT INTO peoplee ( name, surname,age,gender,phonenumber,birthday,birthplace,email)" + " VALUES (" + "'" +
                 person.getName() + "','" + person.getSurname() + "'," + person.getAge() + ",'" + person.getGender() +
                 "','" + person.getPhoneNumber() + "','" + person.getBirthday() + "','" + person.getBirthplace() + "','" + person.getEmail() + "'); ");
@@ -86,50 +86,51 @@ public class DbConnectionToPerson implements PersonService {
         String message = "";
 
         try {
-            input = new Scanner(System.in);
+            Scanner_input_Class.input = new Scanner(System.in);
             System.out.println("Enter name");
-            String name = input.nextLine();
+            String name = Scanner_input_Class.input.nextLine();
             System.out.println("Enter surname");
-            String surname = input.nextLine();
+            String surname = Scanner_input_Class.input.nextLine();
             System.out.println("Enter age");
             message = "Please enter a type of int for age";
-            int age = input.nextInt();
+            int age = Scanner_input_Class.input.nextInt();
 
             message = "Please enter a type of char for gender Ex: m/f";
             System.out.println("Enter gender in this char format Ex: m/f");
-            Character gender = input.next().charAt(0);
+            Character gender = Scanner_input_Class.input.next().charAt(0);
             Pattern regex = Pattern.compile("[M | m | F | f]");
             if (!regex.matcher(gender + "").matches()) throw new IllegalArgumentException("");
-            input.nextLine();
+            Scanner_input_Class.input.nextLine();
             System.out.println("Enter your phone number");
-            String phoneNumber = input.nextLine();
+            String phoneNumber = Scanner_input_Class.input.nextLine();
 
             System.out.println("Enter your birthday in this format yyyy-mm-dd");
-            String date = input.nextLine();
+            String date = Scanner_input_Class.input.nextLine();
             message = "Please enter a correct format of date Ex: `yyyy-mm-dd`";
             DateTime date1 = new DateTime(date);
 
             System.out.println("Enter your birthplace");
-            String birthplace = input.nextLine();
+            String birthplace = Scanner_input_Class.input.nextLine();
 
             System.out.println("Enter your email");
-            String email = input.nextLine();
+            String email = Scanner_input_Class.input.nextLine();
             Person person = new Person(name, surname, age,
                     gender, phoneNumber, date1, birthplace, email);
-            stmt.executeUpdate(ConvertPersonObjectToString(person));
+            stmt.executeUpdate(convertPersonObjectToString(person));
 
             stmt.close();
             c.commit();
             c.close();
-            DbConnectionToAccount.addNewAccount(DbConnectionToPerson.addIdPeopleAsPrimaryKeyToAccountTable());
-            new OutputManager().menu();
+            System.out.println(name +" "+surname+ " added successfully to our db\n");
+            DbConnectionToAccount.addNewAccount(DbConnectionToPerson.getIdPeopleeTable());
+            Menu.bankMenu();
         } catch (IllegalArgumentException | InputMismatchException | SQLException sql) {
 
             System.out.printf("%s", message + "\n");
         }
 
     }
-    public static int addIdPeopleAsPrimaryKeyToAccountTable() throws SQLException {
+    public static int getIdPeopleeTable() throws SQLException {
         c = DriverManager
                 .getConnection("jdbc:postgresql://localhost:5432/postgres",
                         "postgres", "12345600");
@@ -140,13 +141,11 @@ public class DbConnectionToPerson implements PersonService {
         int id = 0;
         while (rs.next()) {
             id = rs.getInt("id");
-
-
-        }System.out.println( id);
+        }
        return id;
     }
-    public void deletePerson(int id) {
-
+    public void deletePerson(int id) throws SQLException {
+        ListManagmant.addingValuesFromPeopleTableDbToList();
         if (ListManagmant.idOfAllPersons.contains(id)) {
 
             try {
@@ -161,7 +160,7 @@ public class DbConnectionToPerson implements PersonService {
                 while (rs.next()) {
                     String name = rs.getString("name");
                     String surname = rs.getString("surname");
-                    System.out.println(name + " " + surname + " deleted successfully");
+                    System.out.println(name + " " + surname + " deleted successfully\n");
                 }
                 String sql = "DELETE from peoplee where ID =" + id;
                 stmt.executeUpdate(sql);
@@ -170,19 +169,20 @@ public class DbConnectionToPerson implements PersonService {
                 rs.close();
                 stmt.close();
                 c.close();
-                new OutputManager().menu();
+                Menu.bankMenu();
             } catch (Exception e) {
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 System.exit(0);
             }
 
-        } else {
-            System.out.println(" this id not exist");
-            new OutputManager().menu();
+        }
+            else {
+            System.out.println(" this id not exist\n");
+            Menu.bankMenu();
         }
     }
 
-    public void showPerson() {
+    public void showPersons() {
         {
 
             try {
@@ -226,61 +226,5 @@ public class DbConnectionToPerson implements PersonService {
     }
 
 
-    public static void AddingValuesFromDbToList() {
-        {
-            {
-
-                try {
-
-                    c = DriverManager
-                            .getConnection("jdbc:postgresql://localhost:5432/postgres",
-                                    "postgres", "12345600");
-                    c.setAutoCommit(false);
-
-
-                    stmt = c.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM peoplee ;");
-
-                    while (rs.next()) {
-                        int id = rs.getInt("id");
-                        String name = rs.getString("name");
-                        String surname = rs.getString("surname");
-                        int age = rs.getInt("age");
-                        String gender = rs.getString("gender");
-                        char c1 = gender.charAt(0);
-                        String phoneNumber = rs.getString("phonenumber");
-                        String birthday = rs.getString("birthday");
-                        DateTime date1 = new DateTime(birthday);
-                        String birthplace = rs.getString("birthplace");
-                        String email = rs.getString("email");
-                        ListManagmant.idOfAllPersons.add(id);
-                        Person person = new Person(id, name, surname, age, c1, phoneNumber, date1, birthplace, email);
-                        ListManagmant.personList.add(person);
-
-                    }
-
-
-                    rs.close();
-                    stmt.close();
-                    c.close();
-
-                } catch (Exception e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.exit(0);
-                }
-            }
-        }
-    }
-
-    @Override
-    public List<Account> getAccountsByPersonId(String personId) {
-        return null;
-    }
-
-    public static void main(String[] args) throws SQLException {
-        DbConnectionToPerson dbConnectionToPerson = new DbConnectionToPerson();
-        // dbConnectionToPerson.addIdPeopleAsPrimaryKeyToAccountTable();
-
-    }
 
 }

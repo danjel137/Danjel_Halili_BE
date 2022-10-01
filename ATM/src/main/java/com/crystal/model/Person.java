@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 
 
 public class Person {
-
     private int id;
     private String name;
     private String surname;

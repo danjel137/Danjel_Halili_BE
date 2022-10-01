@@ -7,8 +7,6 @@ import lombok.*;
 @ToString
 
 public class Bank {
-
-
     private String name;
     private String place;
     private String BIC;
