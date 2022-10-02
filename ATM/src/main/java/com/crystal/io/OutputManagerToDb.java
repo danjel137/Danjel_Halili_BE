@@ -9,18 +9,6 @@ import java.sql.SQLException;
 
 public class OutputManagerToDb {
 
-    public void toDo() throws SQLException {
-        switch (Menu.choiceForMainMenu){
-            case 1:
-                toDoForBankServices();break;
-            case 2:
-                System.out.println("this");break;
-            default:
-                System.out.println("please enter the correct number\n");
-                Menu.mainMenu();break;
-        }
-
-    }
     public void toDoForBankServices() throws SQLException {
             DbConnectionToPerson dbConnection=new DbConnectionToPerson();
         switch (Menu.choiceForBankMenu) {
@@ -51,6 +39,7 @@ public class OutputManagerToDb {
             case 9:
                 Menu.mainMenu();break;
             case 0:
+                System.out.println("Thank you");
                 System.exit(0);break;
             default:
                 System.out.println("please enter the correct number\n");

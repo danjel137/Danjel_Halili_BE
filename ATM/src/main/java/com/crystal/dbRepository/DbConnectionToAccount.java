@@ -3,14 +3,13 @@ package com.crystal.dbRepository;
 import com.crystal.io.Menu;
 import com.crystal.io.Scanner_input_Class;
 import com.crystal.model.Person;
-import com.crystal.servicesValidationForBank.RandomValidation;
+import com.crystal.servicesValidationForBank.ValidationDb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Optional;
-import java.util.Scanner;
-import static com.crystal.servicesValidationForBank.ValidationDb.randomPinValidation;
+import static com.crystal.servicesValidationForBank.ValidationDb.randomPin;
 
 public class DbConnectionToAccount  {
     static Connection c = null;
@@ -50,15 +49,18 @@ public class DbConnectionToAccount  {
         public static void addNewAccount(int idd) {
 
             try {
-
                 c = DriverManager
                         .getConnection("jdbc:postgresql://localhost:5432/postgres",
                                 "postgres", "12345600");
                 c.setAutoCommit(false);
 
                 stmt = c.createStatement();
-                int pin=randomPinValidation();
-                String iban= RandomValidation.checkEqualsRandomIban();
+
+                int pin= randomPin();
+
+                String iban= ValidationDb.generateIban();
+                System.out.println("this");
+                System.out.println(iban+pin);
                 String sql = "INSERT INTO account(iban,money,code,fk_people_id)VALUES ('" + iban + "'," +0+",'"+pin+"',"+idd+");";
                     stmt.executeUpdate(sql);
                     stmt.close();
@@ -72,6 +74,7 @@ public class DbConnectionToAccount  {
                 }
 
             catch (Exception e) {
+                System.out.println("this");
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 System.exit(0);
             }
@@ -89,8 +92,8 @@ public class DbConnectionToAccount  {
             c.setAutoCommit(false);
 
             stmt = c.createStatement();
-            int pin=randomPinValidation();
-            String iban= RandomValidation.checkEqualsRandomIban();
+            int pin= randomPin();
+            String iban= ValidationDb.generateIban();
             String sql = "INSERT INTO account(iban,money,code,fk_people_id)VALUES ('" + iban + "'," +0+",'"+pin+"',"+id+");";
             stmt.executeUpdate(sql);
             stmt.close();
@@ -112,5 +115,11 @@ public class DbConnectionToAccount  {
     }else System.out.println("This id doesn't exist please enter correct id!\n");
         addNewAccountToExistedPersonInDb(Scanner_input_Class.input.nextInt());
         }
+
+    public static void main(String[] args) {
+
+        DbConnectionToAccount.addNewAccount(2);
+    }
+
 
 }

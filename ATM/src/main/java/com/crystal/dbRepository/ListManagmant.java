@@ -1,8 +1,7 @@
 package com.crystal.dbRepository;
 
-import com.crystal.dao.dataAccessList;
+import com.crystal.dao.DataAccessList;
 import com.crystal.io.Menu;
-import com.crystal.io.OutputManagerToDb;
 import com.crystal.io.Scanner_input_Class;
 import com.crystal.model.Account;
 import com.crystal.model.Person;
@@ -12,7 +11,7 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ListManagmant implements dataAccessList {
+public class ListManagmant implements DataAccessList {
     static Connection c = null;
     static Statement stmt = null;
     public static Set<Integer> idOfAllPersons = new HashSet<>();
@@ -20,11 +19,11 @@ public class ListManagmant implements dataAccessList {
     public static Set<Account> accountList = new HashSet<>();
     public static Set<Integer> idOfAllAccount = new HashSet<>();
     @Override
-    public Set<Integer> getAllPersons() {
+    public Set<Integer> getIdAllPersons() {
         return  idOfAllPersons;
     }
     @Override
-    public Set<Integer> getAllAccounts() {return  idOfAllAccount;
+    public Set<Integer> getIdAllAccounts() {return  idOfAllAccount;
     }
     @Override
     public Set<Person> getPersons() {

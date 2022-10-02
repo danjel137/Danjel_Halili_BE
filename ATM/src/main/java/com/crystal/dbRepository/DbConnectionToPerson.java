@@ -101,7 +101,7 @@ public class DbConnectionToPerson implements PersonService {
             Pattern regex = Pattern.compile("[M | m | F | f]");
             if (!regex.matcher(gender + "").matches()) throw new IllegalArgumentException("");
             Scanner_input_Class.input.nextLine();
-            System.out.println("Enter your phone number");
+            System.out.println("Enter phone number");
             String phoneNumber = Scanner_input_Class.input.nextLine();
 
             System.out.println("Enter your birthday in this format yyyy-mm-dd");
@@ -109,10 +109,10 @@ public class DbConnectionToPerson implements PersonService {
             message = "Please enter a correct format of date Ex: `yyyy-mm-dd`";
             DateTime date1 = new DateTime(date);
 
-            System.out.println("Enter your birthplace");
+            System.out.println("Enter birthplace");
             String birthplace = Scanner_input_Class.input.nextLine();
 
-            System.out.println("Enter your email");
+            System.out.println("Enter email");
             String email = Scanner_input_Class.input.nextLine();
             Person person = new Person(name, surname, age,
                     gender, phoneNumber, date1, birthplace, email);
