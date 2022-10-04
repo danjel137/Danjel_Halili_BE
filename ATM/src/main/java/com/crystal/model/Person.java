@@ -1,6 +1,6 @@
 package com.crystal.model;
 
-import lombok.*;
+import lombok.Data;
 import org.joda.time.DateTime;
 
 @Data

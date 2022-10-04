@@ -1,13 +1,13 @@
-package com.crystal.dao;
-
-import com.crystal.model.Account;
+package com.crystal.repository;
 
 import java.sql.SQLException;
-import java.util.List;
 
-public interface PersonService {
+public interface DataAccessList {
     public void addPerson();
+
     public void deletePerson(int id) throws SQLException;
+
     public void showPersons();
+
 
 }
